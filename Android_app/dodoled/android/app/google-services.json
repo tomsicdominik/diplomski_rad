@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "194564473831",
+    "project_id": "dodoled-signin",
+    "storage_bucket": "dodoled-signin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194564473831:android:984a09f1e49b4002003342",
+        "android_client_info": {
+          "package_name": "com.example.dodoled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194564473831-6o419f9mjnt5u7enbpv78ki1ogcjdk7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFS01DEQIRYSlCLlVxpTriv1zj-w2cxn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194564473831-6o419f9mjnt5u7enbpv78ki1ogcjdk7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
