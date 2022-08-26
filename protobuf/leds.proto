@@ -1,0 +1,153 @@
+syntax = "proto3";
+
+package leds;
+
+option go_package = "/proto";
+
+message Animation {
+    string deviceId = 1;
+    string name = 2;
+    int32 pause = 3;
+    repeated RGB colours = 4;    
+    repeated RowMeta meta = 5;
+    repeated Step upON = 6;
+    repeated Step upOFF = 7;
+    repeated Step downON = 8;
+    repeated Step downOFF = 9;
+    int32 animationDuration = 10;
+    int32 onTime = 11;
+    bool new = 12;
+    int32 rows = 13;
+    int32 ledsPerRow = 14; 
+}
+
+message RegisterAnimationResponse{
+    string status = 1;
+}
+
+message GetAnimationRequest{
+    string deviceId = 1;
+    string user = 2;
+}
+
+message GetAnimationResponse{
+    string status = 1;
+    Animation animation = 2;
+}
+
+message Step {
+    repeated PositionColour positionColour = 1;
+}
+
+message PositionColour {
+    int32 position = 1;
+    int32 colour = 2;
+}
+
+message RowMeta {
+    int32 row = 1;
+    string direction = 2;
+}
+
+message RGB {
+    int32 red = 1;
+    int32 green = 2;
+    int32 blue = 3;
+}
+
+message RBPairingRequest {    
+    string type = 1;
+    string ip = 2;
+    string status = 3;
+    string deviceId = 4;
+    int64 timestampRecieved = 5;
+    int64 timestampPending = 6;
+    int32 rows = 7;
+    int32 ledsPerRow = 8;
+}
+
+message RBPairingResponse {
+    string status = 1;
+    string id = 2;
+}
+
+message AppGetDevicesRequest {
+    string user = 1;
+    string ip = 2;
+}
+  
+message AppGetDevicesResponse {
+    repeated Device devices = 1;
+}
+
+message Device {
+    string id = 1;
+    string name = 2;
+    string type = 3; 
+    string user = 4;
+    string pairingId = 5;
+    int32 rows = 6;
+    int32 ledsPerRow = 7;
+    string status = 8;
+    bool active = 9;
+}
+
+message AppPairingRequest{
+    string userId = 1;
+    string userMail = 2;
+    Device device = 3;
+}
+
+message AppPairingResponse{
+    string status = 1;
+}
+
+message DeviceControl{
+    string id = 1;
+    string state = 2;
+    RGB colour = 3;
+    bool new = 4;
+}
+
+message GetDeviceControlRequest{
+    string user = 1;
+    string deviceId = 2;
+}
+
+message GetDeviceControlResponse{
+    string status = 1;
+    DeviceControl deviceControl = 2;
+}
+
+message SetDeviceControlRequest{
+    string user = 1;
+    DeviceControl deviceControl = 2;
+}
+
+message SetDeviceControlResponse{
+    string status = 1;  
+}
+
+message DeviceConnectionRequest{
+    string id = 1;
+}
+
+message DeviceConnectionResponse{
+    string action = 1;
+    DeviceControl deviceControl = 2;
+    Animation animation = 3;
+}
+
+service DodoledService {
+    rpc RBPairing(RBPairingRequest) returns (RBPairingResponse);
+    rpc AppGetPotentialDevices(AppGetDevicesRequest) returns (AppGetDevicesResponse);
+    rpc AppGetPairedDevices(AppGetDevicesRequest) returns (AppGetDevicesResponse);
+    rpc AppPairing(AppPairingRequest) returns (AppPairingResponse);
+    rpc GetAnimation(GetAnimationRequest) returns (GetAnimationResponse);
+    rpc RegisterAnimation(Animation) returns (RegisterAnimationResponse);
+    rpc UnpairDevice(Device) returns (AppPairingResponse);
+    rpc GetDeviceControl(GetDeviceControlRequest) returns (GetDeviceControlResponse);
+    rpc SetDeviceControl(SetDeviceControlRequest) returns (SetDeviceControlResponse);
+    rpc DeviceConnection(DeviceConnectionRequest) returns (stream DeviceConnectionResponse);
+};
+
